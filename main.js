@@ -1,11 +1,12 @@
 class AudioRecorder {
-  constructor(buttonElement) {
-    this.buttonElement = buttonElement;
+  constructor(button) {
     this.isRecording = false;
     this.recordedBlobs = [];
 
-    this.buttonElement.addEventListener('mousedown', () => this.startRecording());
-    this.buttonElement.addEventListener('mouseup', () => this.stopRecording());
+    [['mousedown', 'mouseup'], ['touchstart', 'touchend']].forEach(([start, end]) => {
+      button.addEventListener(start, () => this.startRecording());
+      button.addEventListener(end, () => this.stopRecording());
+    })
   }
 
   startRecording() {
